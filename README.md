@@ -9,7 +9,9 @@ Voici la procédure à suivre :
 - Taper les commandes suivantes :
 
 	tar -zxvf Pygments-1.6.tar.gz
+
 	cd Pygments-1.6
+
 	sudo python setup.py install
 
 # Compilation du rapport
