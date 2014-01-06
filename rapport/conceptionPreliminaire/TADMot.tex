@@ -1,0 +1,16 @@
+\begin{algorithme}
+	\signaturefonction{mot}{}{\mot}	
+	\signaturefonction{obtenirContenu}{mot : \mot}{\chaine}	
+	\signaturefonction{sontEgaux}{mot1, mot2 : \mot}{\booleen}
+	\signaturefonction{longueur}{mot : \mot}{\naturel}
+	\signatureProcedureAvecPreconditions{insererCaractere}{\paramEntreeSortie{mot : \mot}; \paramEntree{c : \caractere, i : \naturelnonnul}}{1 \infegalea i \infegalea longueur(mot) + 1 ET estLettreOuTiret(c)}
+	\signatureProcedureAvecPreconditions{modifierCaractere}{\paramEntreeSortie{mot : \mot}; \paramEntree{c : \caractere, i : \naturelnonnul}}{1 \infegalea i \infegalea longueur(mot) ET estLettreOuTiret(c)}
+	\signatureProcedureAvecPreconditions{supprimerCaractere}{\paramEntreeSortie{mot : \mot}; \paramEntree{i : \naturelnonnul}}{1 \infegalea i \infegalea longueur(mot)}
+	\signatureFonctionAvecPreconditions{iemeCaractere}{mot : \mot, i : \naturelnonnul}{\caractere}{1 \infegalea i \infegalea longueur(mot)}
+	\signaturefonction{concatener}{a : \mot, b : \mot}{\mot}
+	\signaturefonction{estUnMotValide}{mot : \mot}{\booleen}
+	\signatureProcedureAvecPreconditions{separerMots}{\paramEntree{mot : \mot, i : \naturelnonnul}; \paramSortie{a : \mot, b : \mot}}{1 \infegalea i \infegalea longueur(mot)}
+	\signatureFonctionAvecPreconditions{sousMot}{mot : \mot, debut : \naturelnonnul, longueur : \naturelnonnul}{\mot}{1 \infegalea debut + longueur \infegalea longueur(mot) et non(longueur(mot) = 0}
+	\signaturefonction{estSousMot}{a : \mot, b : \mot}{\booleen}
+	\signaturefonction{sontIdentiques}{a : \mot, b : \mot}{\booleen}
+\end{algorithme}

@@ -1,0 +1,79 @@
+\begin{algorithme}
+
+	\commentaire{Structure permettant de manipuler les paramètres reçus par le programme (-h, -d, -f, -malandain etc etc ..)}
+	\begin{enregistrement}{Parametre}
+		\commentaire{variable initialisée si il y a un '-d' dans les paramètres, elle contient le nom du dictionnaire}
+		\champEnregistrement{dictionnaire}{\chaine}
+
+		\commentaire{variable initialisée si il y a un '-f' dans les paramètres, elle contient le nom du fichier}
+		\champEnregistrement{fichier}{\chaine}
+
+		\commentaire{La chaîne de caractères donnée en entrée à corriger}
+		\champEnregistrement{cible}{\chaine}
+
+		\commentaire{Variables qui prend vrai SSI il y a un '-h' dans les paramètres.}
+		\champEnregistrement{aide}{\booleen}
+	\end{enregistrement}	
+
+
+	\fonction{parametres}{}{\parametres}
+	{
+		p : \parametres
+	}
+	{
+		\affecter{p.dictionnaire}{NULL}
+		\affecter{p.fichier}{NULL}
+		\affecter{p.cible}{NULL}
+		\affecter{p.aide}{Faux}
+		\instruction{}
+	}
+	\newline
+	\procedure{fixerDictionnaire}{\paramEntreeSortie{p : \parametres}, \paramEntree{c : \chaine}}
+	{}
+	{
+		\affecter{p.dictionnaire}{c}
+	}
+	\newline
+	\procedure{fixerFichier}{\paramEntreeSortie{p : \parametres}, \paramEntree{c : \chaine}}
+	{}
+	{
+		\affecter{p.fichier}{c}
+	}
+	\newline
+	\procedure{fixerCible}{\paramEntreeSortie{p : \parametres}, \paramEntree{c : \chaine}}
+	{}
+	{
+		\affecter{p.cible}{c}
+	}
+	\newline
+	\procedure{fixerAide}{\paramEntreeSortie{p : \parametres}, \paramEntree{b : \booleen}}
+	{}
+	{
+		\affecter{p.aide}{b}
+	}
+	\newline
+	\fonction{obtenirDictionnaire}{p : \parametres}{\chaine}
+	{}
+	{
+		\retourner{p.dictionnaire}
+	}
+	\newline
+	\fonction{obtenirFichier}{p : \parametres}{\chaine}
+	{}
+	{
+		\retourner{p.fichier}
+	}
+	\newline
+	\fonction{obtenirAide}{p : \parametres}{\booleen}
+	{}
+	{
+		\retourner{p.aide}
+	}
+	\newline
+	\fonction{obtenirCible}{p : \parametres}{\chaine}
+	{}
+	{
+		\retourner{p.cible}
+	}
+	\newline
+\end{algorithme}

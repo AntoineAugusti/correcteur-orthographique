@@ -1,0 +1,19 @@
+\begin{algorithme}
+		\signatureProcedure{asispell}{\paramEntree{argc : \naturel, argv : \tableauUneDimension{1..nbParametres}{ de }{\chaine}}}
+		\signaturefonction{formaterParametres}{nbParametre : \entier, parametres : \tableauUneDimension{1..nbParametres}{ de }{\chaine}}{\parametres}
+		\signatureProcedure{executerProgramme}{\paramEntree{parametres : \parametres}}
+		\signatureProcedure{ajouterDansLeDictionnaire}{}
+		\signaturefonction{corriger}{chaine : \chaine, dictionnaire : \dictionnaire}{\chaine}
+		\signatureProcedure{evaluerSaisie}{\paramEntreeSortie{estValide : \booleen, erreur : \entier}; \paramEntree{chaine : \chaine}}
+		\signatureFonction{genererListeDeSuperMots}{chaine : \chaine, dictionnaire : \dictionnaire}{\listesupermot}
+		\signatureFonction{separerMots}{chaine : \chaine, dictionnaire : \dictionnaire}{\listesupermot}
+		\signatureFonction{verifieValidite}{mot : \mot, dictionnaire \dictionnaire}{\booleen}
+		\signatureProcedure{corrigerListeDeSuperMots}{\paramEntreeSortie{listeDeSuperMots : \listesupermot}; \paramEntree{dictionnaire : \dictionnaire}}
+		\signatureFonction{retournerCorrection}{listeDeSuperMots : \listesupermot}{\chaine}
+		\signaturefonction{listeDeMotsEnChaine}{listeDeMots : \listemot}{\chaine}
+		\signatureProcedure{afficherResultat}{\paramEntree{erreur : \entier, chaine : \chaine}}
+		\signatureProcedure{afficherErreur}{\paramEntree{typerDErreur : \entier}}
+		\signatureProcedure{afficherCorrection}{\paramEntree{correction : \chaine}}
+		\signatureProcedure{afficherAide}{}
+
+\end{algorithme}

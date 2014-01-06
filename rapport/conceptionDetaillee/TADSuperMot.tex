@@ -1,0 +1,70 @@
+\begin{algorithme}
+	\begin{enregistrement}{SuperMot}
+		\champEnregistrement{mot}{\mot}
+		\commentaire{La position du mot dans la chaîne donnée en entrée du programme.}
+		\champEnregistrement{position}{\naturelnonnul}
+		\champEnregistrement{listeCorrections}{\listeMot}
+		\commentaire{Indique si le mot est mal orthographié ou non.}
+		\champEnregistrement{valide}{\booleen}
+	\end{enregistrement}
+	\newline
+	\fonction{superMot}{}{\supermot}
+	{
+		supermot : \supermot
+	}
+	{
+		\affecter{supermot.mot}{mot()}
+		\affecter{supermot.position}{1}
+		\affecter{supermot.listeCorrections}{listeVide()}
+		\affecter{supermot.valide}{faux}
+		\retourner{supermot}
+	}
+	\newline
+	\fonction{obtenirMot}{supermot : \supermot}{\mot}
+	{}
+	{
+		\retourner{supermot.mot}
+	}
+	\newline
+	\procedure{fixerMot}{\paramEntreeSortie{supermot : \supermot}, \paramEntree{mot : \mot}}
+	{}
+	{
+		\affecter{supermot.mot}{mot}
+	}
+	\newline
+	\fonction{obtenirPosition}{supermot : \supermot}{\naturelnonnul}
+	{}
+	{
+		\retourner{supermot.position}
+	}
+	\newline
+	\procedure{fixerPosition}{\paramEntreeSortie{supermot : \supermot}, \paramEntree{position : \naturelnonnul}}
+	{}
+	{
+		\affecter{supermot.position}{position}
+	}
+	\newline
+	\fonction{obtenirListeDeCorrection}{supermot : \supermot}{\listemot}
+	{}
+	{
+		\retourner{supermot.listeCorrections}
+	}
+	\newline
+	\procedure{fixerListeDeCorrection}{\paramEntreeSortie{supermot : \supermot}, \paramEntree{corrections : \listemot}}
+	{}
+	{
+		\affecter{supermot.listeCorrections}{corrections}
+	}
+	\newline
+	\fonction{obtenirValidite}{supermot : \supermot}{\booleen}
+	{}
+	{
+		\retourner{supermot.valide}
+	}
+	\newline
+	\procedure{fixerValidite}{\paramEntreeSortie{supermot : \supermot}, \paramEntree{estValide : \booleen}}
+	{}
+	{
+		\affecter{supermot.valide}{estValide}
+	}
+\end{algorithme}

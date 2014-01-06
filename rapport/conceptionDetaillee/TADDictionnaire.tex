@@ -1,0 +1,226 @@
+
+\begin{algorithme}
+	\begin{enregistrement}{Dictionnaire}
+		\champEnregistrement{racines}{\tableauUneDimension{1...NBLETTRES}{de }{\elementdico}}
+		\champEnregistrement{longueur}{\naturel}
+	\end{enregistrement}
+	\newline
+	\fonction{dictionnaire}{}{\dictionnaire}
+	{i : \naturelnonnul, dictionnaire : \dictionnaire}
+	{
+		\pour{i}{1}{NBLETTRES}{}
+		{
+			\affecter{dictionnaire.racines[i]}{\pointeurNULL}
+		}
+		\affecter{dictionnaire.longueur}{0}
+		\retourner{dictionnaire}
+	}
+	\newline
+	\fonction{estVide}{dictionnaire: \dictionnaire}{\booleen}
+	{}
+	{
+		\retourner{dictionnaire.longueur = 0}
+	}
+	\newline
+	\procedure{insererMot}{\paramEntreeSortie{dictionnaire: \dictionnaire}; \paramEntree{mot : \mot}}
+	{
+		i, j, indice : \naturelnonnul \\ 
+		longueur : \naturel \\ 
+		tableauDesElementsSuivants : \tableauUneDimension{1...NBLETTRES}{de }{\elementdico} \\ 
+		element, nouvelElement : \elementdico
+	}
+	{
+		\pour{indice}{1}{NBLETTRES}{}
+		{
+			\affecter{tableauDesElementsSuivants[indice]}{dictionnaire.racines[indice]}
+		}
+		\affecter{longueur}{dictionnaire.longueur}
+
+		\pour{i}{1}{longueur(mot)}{}
+		{
+			\affecter{j}{1}
+			\commentaire{On vient chercher dans notre tableau le caractère correspondant au caractère de notre mot}
+			\tantque{j \infegalea longueur ET obtenirLettre(tableauDesElementsSuivants[j]) \differentde iemeCaractere(mot, i)}
+			{
+				\affecter{j}{j + 1}
+			}
+			\sialorssinon{j \infegalea longueur}
+			{
+				\affecter{element}{tableauDesElementsSuivants[j]}
+			}
+			{
+				\affecter{nouvelElement}{element(iemeCaractere(mot, i), faux)}
+				\commentaire{La racine n'existe pas dans le dictionnaire, on doit la créer}
+				\sialors{i = 1}
+				{
+					\affecter{dictionnaire.racines[dictionnaire.longueur]}{nouvelElement}
+					\affecter{dictionnaire.longueur}{dictionnaire.longueur + 1}
+				}
+				{
+					\instruction{ajouterElementSuivant(element, nouvelElement)}
+				}
+				\affecter{element}{nouvelElement}
+			}
+			\commentaire{On passe à l'élément suivant pour le prochain caractère du mot}
+			\pour{indice}{1}{NBLETTRES}{}
+			{
+				\affecter{tableauDesElementsSuivants[indice]}{(obtenirTableauDesElementsSuivants(element))[indice]}
+			}
+			\affecter{longueur}{obtenirLongueurTableauDesElementsSuivants(element)}
+		}
+		\instruction{ajouterPresence(element)}
+	}
+	\newline
+	\procedure{insererFichier}{\paramEntreeSortie{dictionnaire: \dictionnaire}; \paramEntree{nomFichier : \chaine}}
+	{
+		fichier : \fichierTexte, \\
+		ligne : \chaine 
+	}
+	{
+		\affecter{fichier}{fichierTexte(nomFichier)}
+		\instruction{ouvrir(fichier, lecture)}
+		\pourChaque{ligne}{fichier}
+		{
+			\instruction{insererMot(dictionnaire, genererMot(ligne))}
+		}
+		\instruction{fermer(fichier)}
+	}
+	\newline
+	\fonction{estPresent}{dictionnaire: \dictionnaire, mot : \mot}{\booleen}
+	{
+		i, j, indice : \naturelnonnul \\ 
+		longueur : \naturel \\ 
+		tableauDesElementsSuivants : \tableauUneDimension{1...NBLETTRES}{de }{\elementdico} \\ 
+		element : \elementdico
+	}
+	{
+		\pour{indice}{1}{NBLETTRES}{}
+		{
+			\affecter{tableauDesElementsSuivants[indice]}{dictionnaire.racines[indice]}
+		}
+		\affecter{longueur}{dictionnaire.longueur}
+		\commentaire{Vérifions que l'on trouve le mot caractère après caractère dans le dictionnaire}
+		\pour{i}{1}{longueur(mot)}{}
+		{
+			\affecter{j}{1}
+			\tantque{j \infegalea longueur ET obtenirLettre(tableauDesElementsSuivants[j]) \differentde iemeCaractere(mot, i)}
+			{
+				\affecter{j}{j + 1}
+			}
+			\commentaire{On vérfie si on est sorti du while parce qu'on est arrivé à la fin du tableau ou si on a trouvé la bonne lettre}
+			\sialorssinon{j \infegalea longueur ET obtenirLettre(tableauDesElementsSuivants[j]) = iemeCaractere(mot, i)}
+			{
+				\affecter{element}{tableauDesElementsSuivants[j]}
+			}
+			{
+				\retourner{faux}
+			}
+			\commentaire{Tout va bien, on continue à avancer pour le prochain caractère}
+			\pour{indice}{1}{NBLETTRES}{}
+			{
+				\affecter{tableauDesElementsSuivants[indice]}{(obtenirTableauDesElementsSuivants(element))[indice]}
+			}
+			\affecter{longueur}{obtenirLongueurTableauDesElementsSuivants(element)}
+		}
+		\commentaire{Si on n'a eu toujours aucune erreur, on retourne la valeur du booléen du dernier caractère}
+		\retourner{obtenirBooleen(element)}
+	}
+	\newline
+	\fonction{charger}{nomFichier : \chaine}{\dictionnaire}
+	{
+		fichier : \fichierTexte \\
+		dictionnaire : \dictionnaire \\
+		longueur : \naturel \\
+		i : \naturelnonnul
+	}
+	{
+		\affecter{dictionnaire}{dictionnaire()}
+		\affecter{fichier}{fichierTexte(nomFichier)}
+		\instruction{ouvrir(fichier, lecture)}
+		\affecter{longueur}{recupererUneLongueur(fichier)}
+		\affecter{dictionnaire.longueur}{longueur}
+		\pour{i}{1}{longueur}{}
+		{
+			\affecter{dictionnaire.racines[i]}{chargerElementsSuivants(fichier)}
+		}
+		\instruction{fermer(fichier)}
+		\retourner{dictionnaire}
+	}
+	\newline
+	\fonction{chargerElementsSuivants}{fichier : \fichierTexte}{\elementDico}
+	{
+		caractere : \caractere \\
+		booleen : \booleen \\
+		longueur : \naturel \\
+		element : \elementDico \\
+		i : \naturelnonnul
+	}
+	{
+		\affecter{caractere}{recupererUnCaractere(fichier)}
+		\affecter{booleen}{recupererUnBooleen(fichier)}
+		\affecter{longueur}{recupererUneLongueur(fichier)}
+		\affecter{element}{element(caractere, booleen)}
+		\pour{i}{1}{longueur}{}
+		{
+			\instruction{ajouterElementSuivant(element, chargerElementsSuivants(fichier))}
+		}
+		\retourner{element}
+	}
+	\newline
+	\fonction{sauvegarder}{dictionnaire: \dictionnaire, emplacement : \chaine}{\fichierTexte}
+	{
+		fichier : \fichierTexte \\
+		dizaine, unite : \caractere \\
+		i : \naturelnonnul
+	}
+	{
+		\affecter{fichier}{fichierTexte(emplacement)}
+		\instruction{ouvrir(fichier, ecriture)}
+		\instruction{naturelEnCaracteres(dictionnaire.longueur, dizaine, unite)}
+		\sialors{dizaine \differentde '0'}
+		{
+			\instruction{ecrireCaractere(fichier, dizaine)}
+		}
+		\instruction{ecrireCaractere(fichier, unite)}
+		\pour{i}{1}{dictionnaire.longueur}{}
+		{
+			\instruction{ecrireCaractere(fichier, obtenirLettre(dictionnaire.racines[i]))}
+			\instruction{ecrireCaractere(fichier, booleenEnCaractere(obtenirBooleen(dictionnaire.racines[i])))}
+			\instruction{naturelEnCaracteres(obtenirLongueurTableauDesElementsSuivants(dictionnaire.racines[i]), dizaine, unite)}
+			\sialors{dizaine \differentde '0'}
+			{
+				\instruction{ecrireCaractere(fichier, dizaine)}
+			}
+			\instruction{ecrireCaractere(fichier, unite)}
+			\instruction{sauvegarderElementsSuivants(fichier, dictionnaire.racines[i])}
+		}
+		\instruction{fermer(fichier)}
+		\retourner{fichier}
+	}
+	\newline
+	\procedure{sauvegarderElementsSuivants}{\paramEntreeSortie{fichier: \fichierTexte}; \paramEntree{elementDico : \elementDico}}
+	{
+		tableauElementsSuivants : \tableauUneDimension{1...NBLETTRES}{de }{\elementdico} \\
+		dizaine, unite : \caractere \\
+		i, indice : \naturelnonnul
+	}
+	{
+		\pour{indice}{1}{NBLETTRES}{}
+			{
+				\affecter{tableauDesElementsSuivants[indice]}{(obtenirTableauDesElementsSuivants(elementDico))[indice]}
+			}
+		\pour{i}{1}{obtenirLongueurTableauDesElementsSuivants(elementDico)}{}
+		{
+			\instruction{ecrireCaractere(fichier, obtenirLettre(tableauElementsSuivants[i]))}
+			\instruction{ecrireCaractere(fichier, booleenEnCaractere(obtenirBooleen(tableauElementsSuivants[i])))}
+			\instruction{naturelEnCaracteres(obtenirLongueurTableauDesElementsSuivants(tableauElementsSuivants[i]), dizaine, unite)}
+			\sialors{dizaine \differentde '0'}
+			{
+				\instruction{ecrireCaractere(fichier, dizaine)}
+			}
+			\instruction{ecrireCaractere(fichier, unite)}
+			\instruction{sauvegarderElementsSuivants(fichier, tableauElementsSuivants[i])}
+		}
+	}
+	\newline
+\end{algorithme}

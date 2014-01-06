@@ -1,0 +1,18 @@
+\begin{tad}
+	\tadNom{Parametres}
+ 	\tadDependances{\booleen, \naturel, \chaine}
+
+ 	\begin{tadOperations}{Parametres}
+ 		\tadOperation{parametres}{}{\tadUnParam{\parametres}}
+ 		\tadOperation{fixerDictionnaire}{\tadDeuxParams{\parametres}{\chaine}}{\tadUnParam{\parametres}}
+ 		\tadOperation{fixerFichier}{\tadDeuxParams{\parametres}{\chaine}}{\tadUnParam{\parametres}}
+ 		\tadOperation{fixerCible}{\tadDeuxParams{\parametres}{\chaine}}{\tadUnParam{\parametres}}
+ 		\tadOperation{fixerAide}{\tadDeuxParams{\parametres}{\booleen}}{\tadUnParam{\parametres}}
+ 		\tadOperation{obtenirDictionnaire}{\tadUnParam{\parametres}}{\tadUnParam{\chaine}}
+ 		\tadOperation{obtenirFichier}{\tadUnParam{\parametres}}{\tadUnParam{\chaine}}
+ 		\tadOperation{obtenirAide}{\tadUnParam{\parametres}}{\tadUnParam{\booleen}}
+ 		\tadOperation{obtenirCible}{\tadUnParam{\parametres}}{\tadUnParam{\chaine}}
+
+ 	\end{tadOperations}
+
+\end{tad}

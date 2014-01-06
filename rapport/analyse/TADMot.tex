@@ -1,0 +1,51 @@
+\begin{tad}
+	\tadNom{Mot}
+	\tadDependances{\booleen,\naturel, \naturelnonnul, \caractere, \chaine}
+	
+	\begin{tadOperations}{Mot}
+		\tadOperation{mot}{}{\tadUnParam{\mot}}
+		\tadOperation{obtenirContenu}{\tadUnParam{\mot}}{\tadUnParam{\chaine}}
+		\tadOperation{sontEgaux}{\tadDeuxParams{\mot}{\mot}}{\tadUnParam{\booleen}}
+		\tadOperation{longueur}{\tadUnParam{\mot}}{\tadUnParam{\naturel}}
+		\tadOperationAvecPreconditions{insererCaractere}{\tadTroisParams{\mot}{\caractere}{\naturelnonnul}}{\tadUnParam{\mot}}
+		\tadOperationAvecPreconditions{modifierCaractere}{\tadTroisParams{\mot}{\caractere}{\naturelnonnul}}{\tadUnParam{\mot}}
+		\tadOperationAvecPreconditions{supprimerCaractere}{\tadDeuxParams{\mot}{\naturelnonnul}}{\tadUnParam{\mot}}
+		\tadOperationAvecPreconditions{iemeCaractere}{\tadDeuxParams{\mot}{\naturelnonnul}}{\tadUnParam{\caractere}}
+		\tadOperation{concatener}{\mot dDeuxParams{\mot}{\mot}}{\tadUnParam{\mot}}
+		\tadOperation{estUnMotValide}{\tadUnParam{\mot t}}{\tadUnParam{\booleen}}
+		\tadOperationAvecPreconditions{separerMots}{\tadDeuxParams{\mot}{\naturel}}{\tadDeuxParams{\mot}{\mot}}
+		\tadOperationAvecPreconditions{sousMot}{\tadTroisParams{\mot}{\naturel}{\naturel}}{\tadUnParam{\mot}}
+		\tadOperation{estSousMot}{\tadDeuxParams{\mot}{\mot}}{\booleen}
+		\tadOperation{sontIdentiques}{\tadDeuxParams{\mot}{\mot}}{\tadUnParam{\booleen}}
+
+	\end{tadOperations}
+	
+	\begin{tadSemantiques}{Mot}
+		\tadSemantique{sontEgaux}{tous les caract?res sont ?gaux (par valeurs).}
+		\tadSemantique{estUnMotValide}{le mot ne contient que des lettres ou des tirets.}
+		\tadSemantique{sontIdentiques}{les mots sont ?gaux (par adresse).}
+		\tadSemantique{separerMots}{S?pare en deux mots. L'indice donn? est le d?but du deuxi?me mot. separerMots(abc, 2) donne a et bc.}
+		\tadSemantique{estSousMot}{d?termine si un mot est contenu dans un autre mot, n'importe o? dans ce dernier.}
+	\end{tadSemantiques}
+	
+	\begin{tadAxiomes}
+		\tadAxiome{longueur(insererCaractere(mot, c, i)) = longueur(mot) + 1}
+		\tadAxiome{longueur(modifierCaractere(mot, c, i)) = longueur(mot)}
+		\tadAxiome{longueur(supprimerCaractere(mot, c, i)) = longueur(mot) - 1}
+		\tadAxiome{sontEgaux(supprimerCaractere(insererCaractere(mot, c, i), i), mot)}
+		\tadAxiome{sontEgaux(insererCaractere(supprimerCaractere(mot, i), c, i), mot)}
+		\tadAxiome{iemeCaractere(insererCaractere(mot, c, i), i) = c}
+		\tadAxiome{longueur(concatener(mot1, mot2)) = longueur(mot1) + longueur(mot2)}
+		\tadAxiome{iemeCaractere(concatener(mot1, mot2), longueur(mot1) + 1) = iemeCaractere(mot2, 1)}
+		\tadAxiome{separerMots(concatener(mot1, mot2), longueur(mot1) + 1) = mot1 , mot2}
+	\end{tadAxiomes}
+	
+	\begin{tadPreconditions}{Mot}
+		\tadPrecondition{insererCaractere}{1 \infegalea i \infegalea longueur(mot) + 1 et estLettreOuTiret(c)}
+		\tadPrecondition{modifierCaractere}{1 \infegalea i \infegalea longueur(mot) et estLettreOuTiret(c)}
+		\tadPrecondition{supprimerCaractere}{1 \infegalea i \infegalea longueur(mot)}
+		\tadPrecondition{separerMots}{1 \infegalea i \infegalea longueur(mot)}
+		\tadPrecondition{iemeCaractere}{ 1 \infegalea i \infegalea longueur(mot) et non(longueur(mot) = 0)}
+		\tadPrecondition{sousMot}{1 \infegalea debut + longueurSousMot \infegalea longueur(mot) et non(longueur(mot) = 0)}
+	\end{tadPreconditions}
+\end{tad}

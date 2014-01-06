@@ -1,0 +1,216 @@
+\begin{algorithme}
+	\begin{enregistrement}{Mot}
+		\champEnregistrement{contenu}{\chaine}
+		\champEnregistrement{longueur}{\naturel}
+	\end{enregistrement}
+	\newline
+	\fonction{mot}{}{\mot}
+	{
+		mot : \mot
+	}
+	{
+		\affecter{mot.contenu}{''}
+		\affecter{mot.longueur}{0}
+		\retourner{mot}
+	}
+	\newline
+
+	\fonction{genererMot}{chaine : \chaine}{\mot}
+	{
+		mot : \mot, \\
+		i : \entier
+	}
+	{
+		\affecter{mot}{mot()}
+		\pour{i}{1}{longueur(chaine)}{}
+		{
+			\instruction{insererCaractere(mot, iemeCaractere(chaine, i), i)}
+		}
+		\retourner{mot}
+	}
+	\newline
+
+	\fonction{obtenirContenu}{mot : \mot}{\chaine}
+	{}
+	{
+		\retourner{mot.contenu}
+	}
+	\newline
+
+	\fonction{sontEgaux}{mot1 : \mot, mot2 : \mot}{\booleen}
+	{
+		res : \booleen  \\
+		i : \naturelnonnul
+	}
+	{
+		\sialorssinon{mot1.longueur $\ne$ mot2.longueur}
+		{
+			\retourner{faux}
+		}
+		{
+			\affecter{res}{vrai}
+			\affecter{i}{1}
+			\tantque{res ET i $ \leq$ longueur(mot1)}
+			{
+				\affecter{res}{iemeCaractere(mot1, i) = iemeCaractere (mot2, i)}
+				\affecter{i}{i + 1}
+			}
+			\retourner{res}
+		}
+	}
+
+	\fonction{longueur}{mot : \mot}{\naturel}
+	{}
+	{
+		\retourner{mot.longueur}
+	}
+	\newline
+	\procedureAvecPreconditions{insererCaractere}{\paramEntreeSortie{mot : \mot}; \paramEntree{c : \caractere, position : \naturelnonnul}}{1 \infegalea position \infegalea longueur(mot) + 1 ET estLettreOuTiret(c)}
+	{
+		i : \naturelnonnul
+	}
+	{
+		\pour{i}{longueur(mot) + 1}{max(position + 1, 2)}{-1}
+		{
+			\affecter{mot.contenu[i]}{iemeCaractere(mot, i - 1)}
+		}
+
+		\affecter{mot.longueur}{longueur(mot) + 1}
+		\instruction{modifierCaractere(mot, c, position)}
+	}
+	\newline
+	\procedureAvecPreconditions{modifierCaractere}{\paramEntreeSortie{mot : \mot}; \paramEntree{c : \caractere, position : \naturelnonnul}}{1 \infegalea position \infegalea longueur(mot) ET estLettreOuTiret(c)}
+	{}
+	{
+		\affecter{mot.contenu[position]}{c}
+	}
+	\newline
+	\procedureAvecPreconditions{supprimerCaractere}{\paramEntreeSortie{mot : \mot}; \paramEntree{position : \naturelnonnul}}{1 \infegalea position \infegalea longueur(mot)}
+	{
+		c : \caractere
+	}
+	{
+		\sialorssinon{longueur(mot) = 1 ET position = 1}
+		{
+			\retourner{mot()}
+		}
+		{
+			\pour{i}{position}{longueur(mot) - 1}{}
+			{
+				\affecter{c}{iemeCaractere(mot, i + 1)}
+				\instruction{modifierCaractere(mot, c, i)}
+			}
+			\affecter{mot.longueur}{longueur(mot) - 1}
+		}
+	}
+	\newline
+	\fonctionAvecPreconditions{iemeCaractere}{mot : \mot, position : \naturelnonnul}{\caractere}{1 \infegalea position \infegalea longueur(mot)}
+	{}
+	{
+		\retourner{mot.contenu[position]}
+	}
+	\newline
+	\fonction{concatener}{mot1 : \mot, mot2 : \mot}{\mot}
+	{
+		c : \caractere
+	}
+	{
+		\pour{i}{longueur(mot1) + 1}{longueur(mot1) + longueur(mot2)}{}
+		{
+			\affecter{c}{iemeCaractere(mot2, i - longueur(mot1))}
+			\instruction{insererCaractere(mot1, c, i)}
+			\affecter{mot1.longueur}{i}
+		}
+		\retourner{mot1}
+	}
+	\newline
+	\fonction{estUnMotValide}{mot : \mot}{\booleen}
+	{
+		res : \booleen \\
+		i : \naturelnonnul
+	}
+	{
+		\affecter{i}{1}
+		\affecter{res}{vrai}
+		\tantque{res ET i \infegalea longueur(mot)}
+		{
+			\affecter{res}{estLettreOuTiret(iemeCaractere(mot, i))}
+			\affecter{i}{i + 1}
+		}
+		\retourner{res}
+	}
+	\newline
+	\commentaire{Sépare en deux mots. L'indice donné est le début du deuxième mot. separerMots(abc, 2) donne a et bc.}
+	\procedureAvecPreconditions{separerMots}{\paramEntree{mot : \mot, position : \naturelnonnul}; \paramSortie{mot1 : \mot, mot2 : \mot}}{1 \infegalea position \infegalea longueur(mot)}
+	{
+		c : \caractere\\
+		i : \naturelnonnul
+	}
+	{
+		\affecter{mot1}{mot()}
+		\pour{i}{1}{position - 1}{}
+		{
+			\affecter{c}{iemeCaractere(mot, i)}
+			\instruction{insererCaractere(mot1, c, i)}
+			\affecter{mot1.longueur}{longueur(mot1) + 1}
+		}
+		\newline
+		\affecter{mot2}{mot()}
+		\pour{i}{position}{longueur(mot)}{}
+		{
+			\affecter{c}{iemeCaractere(mot, i)}
+			\instruction{insererCaractere(mot2, c, i)}
+			\affecter{mot2.longueur}{longueur(mot2) + 1}
+		}
+	}
+	\newline
+	\fonctionAvecPreconditions{sousMot}{mot : \mot, debut : \naturelnonnul, longueur : \naturelnonnul}{\mot}{1 \infegalea debut + longueur \infegalea longueur(mot) et non(longueur(mot) = 0}
+	{
+		c : \caractere \\
+		i : \naturelnonnul \\
+		nouveau : \mot
+	}
+	{
+		\affecter{nouveau}{mot()}
+		\pour{i}{debut}{debut + longueur}{}
+		{
+			\affecter{c}{iemeCaractere(mot, i)}
+			\instruction{insererCaractere(nouveau, c, i - debut + 1)}
+			\affecter{nouveau.longueur}{longueur(nouveau) + 1}
+		}
+		\retourner{nouveau}
+	}
+	\newline
+	\fonction{estSousMot}{mot1 : \mot, mot2 : \mot}{\booleen}
+	{
+		ssMot : \mot \\
+		res : \booleen\\
+		i, j : \naturelnonnul
+	}
+	{
+		\sialorssinon{longueur (mot1) $\textgreater$ longueur(mot2)}
+		{
+			\retourner{faux}
+		}
+		{
+			\pour{i}{1}{longueur(mot2) - longueur(mot1)}{}
+			{
+				\affecter{ssMot}{sousMot(mot2, i, longueur(mot1))}
+				\affecter{res}{vrai}
+				\affecter{j}{1}
+				\tantque{res ET j \infegalea longueur(mot1)}
+				{
+					\affecter{res}{iemeCaractere(mot1, j) = iemeCaractere(ssMot, j)}
+					\affecter{j}{j + 1}
+				}
+			}
+			\retourner{res}
+		}
+	}
+	\newline
+	\fonction{sontIdentiques}{mot1 : \mot, mot2 : \mot}{\booleen}
+	{}
+	{
+		\retourner{(\&mot1 = \&mot2)}
+	}
+\end{algorithme}

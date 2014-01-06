@@ -1,0 +1,285 @@
+\begin{algorithme}
+	\procedure{asispell}{\paramEntree{argc : \naturel, argv : \tableauUneDimension{1..nbParametres}{ de }{\chaine}}}
+	{
+		p : \parametres
+	}
+	{
+		\affecter{p}{formaterParametres(argc, argv)}
+		\instruction{executerProgramme(p)}
+	}
+	\newline
+
+	\fonction{formaterParametres}{nbParametre : \entier, parametres : \tableauUneDimension{1..nbParametres}{ de }{\chaine}}{\parametres}
+	{
+		optch : \entier \\
+		format : \chaine \\
+		p : \parametres
+	}
+	{
+		\commentaire{un paramère simple : la lettre}
+		\commentaire{un paramètre avec argument : la lettre suivi de ":"}
+		\affecter{format}{"hd:f:"}
+
+
+		\affecter{p}{parametres()}
+		\commentaire{fonction équivalente au getopt() en C}
+		\tantque{\affecter{optch}{parseLesParametres(argc, argv, format)} $\ne$ -1}
+		{
+			\sialors{optch = 'h'}
+			{
+				\instruction{fixerAide(p, vrai)}
+			}
+			\sialors{optch = 'f'}
+			{
+				\instruction{fixerFichier(p, optarg)}
+			}
+			\sialors{optch = 'd'}
+			{
+				\instruction{fixerDictionnaire(p, optarg)}
+			}
+
+		}
+		
+		\retourner{parametres}
+	}
+	\newline
+
+	\procedure{executerProgramme}{\paramEntree{parametres : \parametres}}
+	{
+		d : \dictionnaire \\
+		entreeStandard : \chaine
+	}
+	{
+		\affecter{d}{dictionnaire()}
+		\sialorssinon{obtenirAide(parametres)}
+		{
+			\instruction{afficherAide()}
+		}
+		{
+			\commentaire{Si on a un fichier et un dictionnaire, on complète le dictionnaire déjà sérialisé}
+			\sialorssinon{(obtenirFichier(parametres) \differentde NULL) ET (obtenirDictionnaire(parametres) \differentde NULL)}
+			{
+				\affecter{d}{charger(obtenirDictionnaire(parametres))}
+				\instruction{insererFichier(d, obtenirFichier(parametres))}
+				\instruction{sauvegarder(d, obtenirDictionnaire(parametres))}
+			}
+			{
+				\affecter{entreeStandard}{lire()}
+				\instruction{fixerCible(parametres, entreeStandard)}
+
+				\commentaire{On effectue la correction avec le dictionnaire déjà sérialisé}
+				\sialors{(obtenirCible(parametres) \differentde NULL) ET (obtenirDictionnaire(parametres)) \differentde NULL}
+				{
+					\affecter{d}{charger(obtenirDictionnaire(parametres))}
+					\instruction{corriger(obtenirCible(parametres), d)}
+				}
+			}
+
+		}
+	}
+	\newline
+
+	\procedure{ajouterDansLeDictionnaire}{\paramEntreeSortie{dictionnaire : \dictionnaire}; \paramEntree{cheminDuFichier :\chaine}}
+	{}
+	{
+		\instruction{insererFichier(dictionnaire, cheminDuFichier)}
+	}
+	\newline
+
+	\fonction{corriger}{chaine : \chaine, dictionnaire : \dictionnaire}{\chaine}
+	{
+		chaineValide : \booleen \\
+		erreur : \entier \\
+		listeDeSuperMot : \listesupermot \\
+		resultat : \chaine
+	}
+	{
+		\instruction{evaluerSaisie(chaineValide, erreur, chaine)}
+		\affecter{resultat}{""}
+		\sialors{chaineValide}
+		{
+			\affecter{listeSuperMot}{genererListeDeSuperMots(chaine, dictionnaire)}
+			\instruction{corrigerListeDeSuperMots(listeDeSuperMots, dictionnaire)}
+			\instruction{afficherCorrection(listeDeSuperMots)}
+		}
+		\instruction(afficherResultat(erreur, chaine))
+	}
+	\newline
+
+	\procedure{evaluerSaisie}{\paramEntreeSortie{estValide : \booleen, erreur : \entier};\paramEntree{chaine : \chaine}}
+	{
+		i : \naturelnonnul \\
+	}
+	{
+		\affecter{i}{1}
+		\affecter{\pointeur{estValide}}{1}
+		\tantque{i \infegalea longueur(chaine) ET \pointeur{estValide}}
+		{
+			\sialors{non(estCaractereValide(iemeCaractere(chaine, i))}
+			{
+				\affecter{\pointeur{estValide}}{0}
+				\affecter{\pointeur{erreur}}{1}
+			}
+			\affecter{i}{i + 1}
+		}
+	}
+	\newline
+
+	\fonction{genererListeDeSuperMots}{chaine : \chaine, dictionnaire : \dictionnaire}{\listesupermot}
+	{
+	}
+	{
+		\retourner{separerMots(chaine, dictionnaire)}
+
+	}
+	\newline
+
+	\fonction{separerMots}{chaine : \chaine, dictionnaire : \dictionnaire}{\listesupermot}
+	{
+		i : \naturelnonnul \\
+		listeRetour : \listesupermot \\
+		motTemp : \mot \\
+		superMotTemp : \supermot 
+	}
+	{
+		\affecter{motTemp}{mot()}
+		\affecter{listeRetour}{liste()}
+	
+		\pour{i}{1}{longueur(chaine) + 1}{}
+			{
+				\sialorssinon{estLettreOuTiret(iemeCaractere(chaine, i))}
+					{
+						\instruction{insererCaractere(motTemp, iemeCaractere(chaine, i), longueur(motTemp)+1)}
+					}
+					{
+						\sialors{longueur(motTemp) $\ne$ 0}
+							{
+								\instruction{fixerMot(superMotTemp, motTemp)}
+								\instruction{fixerPosition(superMotTemp,i - (longueur(motTemp) + 1))}
+								\instruction{fixerValidite(superMotTemp, verifieValidite(motTemp, dictionnaire))}
+								\instruction{inserer(listeRetour, 1, superMotTemp)}
+							}
+
+						\affecter{motTemp}{mot()}
+					}
+			}
+		\retourner{listeRetour}
+	}
+	\newline
+
+	\fonction{verifieValidite}{mot : \mot, dictionnaire \dictionnaire}{\booleen}
+	{
+	}
+	{
+		\retourner{estPresent(dictionnaire, mot)}
+	}
+	\newline
+
+	\procedure{corrigerListeSuperMot}{\paramEntreeSortie{listeDeSuperMots : \listesupermot}; \paramEntree{dictionnaire : \dictionnaire}}
+	{
+		i : \entier
+		superMotTemp : \supermot
+	}
+	{
+		\pour{i}{1}{longueur(listeDeSuperMots)}{}
+		{
+			\affecter{superMotTemp}{obtenirElement(listeDeSuperMots, i)}
+			\sialors{non superMotTemp.estValide}
+			{
+				\affecter{superMotTemp.listeDeCorrections}{proposerMot(superMotTemp.mot, dictionnaire)} 
+			}
+		}
+	}
+	\newline
+
+	\fonction{afficherCorrection}{listeDeSuperMots : \listesupermot}{\chaine}
+	{
+		i, j : \entier \\
+		superMotTemp : \supermot \\
+		chaine : \chaine
+	}
+	{
+		\affecter{chaine}{""}
+		\pour{i}{1}{longueur(listeDeSuperMots)}{}
+		{
+			\affecter{superMotTemp}{obtenirElement(listeDeSuperMots, i)}
+			\sialorssinon{superMotTemp.estValide = VRAI}
+			{
+				\affecter{chaine}{chaine + "*"}
+			}
+			{
+
+				\affecter{chaine}{chaine + "\&\_ " + obtenirContenu(superMotTemp.mot) + "\_" }
+				\affecter{chaine}{chaine + entierEnChaine(longueur(superMotTemp.listeCorrections)) + "\_" }
+				\affecter{chaine}{chaine + entierEnChaine(superMotTemp.position) + ":\_" }
+				\affecter{chaine}{chaine + listeDeMotsEnChaine(superMotTemp.listeCorrections)}
+			}
+			\affecter{chaine}{chaine + \textit{retout à la ligne}}
+		}
+		\instruction{ecrire(chaine)}
+	}
+	\newline
+
+	\fonction{listeDeMotsEnChaine}{listeDeMots : \listemot}{\chaine}
+	{
+		i : \entier \\
+		chaine : \chaine \\
+		motTemp : \mot
+	}
+	{
+		\affecter{chaine}{""}
+		\pour{j}{1}{longueur(listeDeMots)}{}
+		{
+			\affecter{motTemp}{obtenirElement(listeDeMots, j)}
+			\affecter{chaine}{chaine + "\_" + obtenirContenu(motTemp)}
+		}
+		\retourner{chaine}
+	}
+	\newline
+
+	\procedure{afficherResultat}{\paramEntree{erreur : \entier, chaine : \chaine}}
+	{}
+	{
+		\sialorssinon{erreur = 0}
+		{
+			\instruction{afficherCorrection(chaine)}
+		}
+		{
+			\instruction{afficherErreur(erreur)}
+		}
+	}
+	\newline
+	
+	\procedure{afficherErreur}{\paramEntree{typerDErreur : \entier}}
+	{}
+	{
+			\sialorssinon{typerDErreur = 1}
+			{
+				\ecrire{Au moins un caractère entré n'est pas valide.}
+			}
+			{
+				\sialors{typerDErreur = 2}
+				{
+					\ecrire{Type d'erreur 2}
+				}
+			}
+	}
+	\newline
+
+	\procedure{afficherCorrection}{\paramEntree{correction : \chaine}}
+	{}
+	{
+		\ecrire{correction}
+	}
+	\newline
+
+	\procedure{afficherAide}{}
+	{}
+	{
+		\ecrire{'Aide asispell :'}
+		\ecrire{'		asispell -h : cette aide'}
+		\ecrire{'		asispell -d dico : correction de l'entrée standard à l'aide du dictionnaire dico}
+		\ecrire{'		asispell -d dico - fic : compléter le dictionnaire dico à l'aide du fichier fic}
+	}
+	\newline
+\end{algorithme}

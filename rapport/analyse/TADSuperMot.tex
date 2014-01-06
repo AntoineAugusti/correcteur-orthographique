@@ -1,0 +1,22 @@
+\begin{tad}
+	\tadNom{SuperMot}
+	\tadDependances{\booleen, \naturelnonnul, \mot, \listemot}
+	
+	\begin{tadOperations}{SuperMot}
+		\tadOperation{superMot}{}{\tadUnParam{\supermot}}
+		\tadOperation{obtenirMot}{\tadUnParam{\supermot}}{\tadUnParam{\mot}}
+		\tadOperation{obtenirPosition}{\tadUnParam{\supermot}}{\tadUnParam{\naturelnonnul}}
+		\tadOperation{obtenirListeDeCorrection}{\tadUnParam{\supermot}}{\tadUnParam{\listemot}}
+		\tadOperation{obtenirValidite}{\tadUnParam{\supermot}}{\tadUnParam{\booleen}}
+		\tadOperation{fixerMot}{\tadDeuxParams{\supermot}{\mot}}{\tadUnParam{\supermot}}
+		\tadOperation{fixerPosition}{\tadDeuxParams{\supermot}{\naturelnonnul}}{\tadUnParam{\supermot}}
+		\tadOperation{fixerListeDeCorrection}{\tadDeuxParams{\supermot}{\listemot}}{\tadUnParam{\supermot}}
+		\tadOperation{fixerValidite}{\tadDeuxParams{\supermot}{\booleen}}{\tadUnParam{\supermot}}
+	\end{tadOperations}
+	
+	\begin{tadSemantiques}{SuperMot}
+		\tadSemantique{obtenirPosition}{La position du mot dans la phrase en entrée.}
+		\tadSemantique{obtenirListeDeCorrection}{La liste des corrections pour le mot.}
+		\tadSemantique{obtenirValidite}{Indique si le mot est bien orthographié ou pas.}
+	\end{tadSemantiques}
+\end{tad}

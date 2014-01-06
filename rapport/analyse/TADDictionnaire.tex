@@ -1,0 +1,23 @@
+\begin{tad}
+ 	\tadNom{Dictionnaire}
+	\tadDependances{\booleen, \naturel, \mot, \fichierTexte, \chaine, \elementdico}
+
+	\begin{tadOperations}{Dictionnaire}
+		\tadOperation{dictionnaire}{\tadUnParam{}}{\tadUnParam{\dictionnaire}}
+		\tadOperation{estVide}{\tadUnParam{\dictionnaire}}{\tadUnParam{\booleen}}
+		\tadOperation{insererMot}{\tadDeuxParams{\dictionnaire}{\mot}}{\tadUnParam{\dictionnaire}}
+		\tadOperation{insererFichier}{\tadDeuxParams{\dictionnaire}{\chaine}}{\tadUnParam{\dictionnaire}}
+		\tadOperation{estPresent}{\tadDeuxParams{\dictionnaire}{\mot}}{\tadUnParam{\booleen}}
+		\tadOperation{charger}{\tadUnParam{\chaine}}{\tadUnParam{\dictionnaire}}
+		\tadOperation{sauvegarder}{\tadDeuxParams{\dictionnaire}{\chaine}}{\tadUnParam{\fichierTexte}}
+	\end{tadOperations}
+		
+	\begin{tadAxiomes}
+		\tadAxiome{estVide(dictionnaire())}
+		\tadAxiome{non estVide(insererMot(d, m))}
+		\tadAxiome{estPresent(insererMot(d, m), m)}
+		\tadAxiome{non(estPresent(d, m) XOR insererMot(d, m) = d)}
+		\tadAxiome{non estPresent(d, m) ET nombreMots(insererMot(d, m)) = 1 + nombreMots(d)}
+	\end{tadAxiomes}
+
+\end{tad}

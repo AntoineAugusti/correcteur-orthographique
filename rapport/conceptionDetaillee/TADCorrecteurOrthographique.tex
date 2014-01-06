@@ -1,0 +1,146 @@
+	\begin{algorithme}
+		\fonction{proposerMots}{dico : \dictionnaire, mot : \mot}{\listemot}
+		{
+		}
+		{
+			\retourner{motsExacts(possibilitesMots(mot), dico)}
+		}
+		\newline
+
+		\fonction{possibilitesMot}{mot : \mot}{\listemot}
+		{
+			liste, liste2, liste3, liste4 : \listemot \\
+			i : \naturel}
+		{
+			\affecter{i}{0}
+			\affecter{liste}{genererMotParRemplacement(mot)}
+			\affecter{liste2}{genererMotParSuppression(mot)}
+			\affecter{liste3}{genererMotParInsertion(mot)}
+			\affecter{liste4}{enererMotsParInversion(mot)}
+
+			\pour{i}{1}{longueur(liste2)}{}{
+				\instruction{ajouter(liste, obtenirElement(liste2, i))}
+			}
+			\pour{i}{1}{longueur(liste3)}{}{
+				\instruction{ajouter(liste, obtenirElement(liste3, i))}
+			}
+			\pour{i}{1}{longueur(liste4)}{}{
+				\instruction{ajouter(liste, obtenirElement(liste4, i))}
+			}
+			\retourner{liste}
+		}
+		\newline
+
+		\fonction{enererMotsParInversion}{mot : \mot}{\listemot}
+		{
+			liste: \listemot\\
+			motTemp : \mot\\
+			c : \caractere\\
+			i : \naturelnonnul
+		}
+		{
+			\affecter{liste}{liste()}
+			\pour{i}{1}{longueur(mot)}{}
+			{
+				\affecter{motTemp}{mot}
+				\affecter{c}{iemeCaractere(mot, i)}
+				\instruction{modifierCaractere(motTemp, iemeCaractere(mot, i + 1, i))}
+				\instruction{modifierCaractere(motTemp, c, i + 1)}
+				\instruction{inserer(liste, i, motTemp}
+			}
+			\retourner{liste}
+		}
+		\newline
+
+		\fonction{genererMotsParSuppression}{mot : \mot}{\listemot}
+		{
+			liste: \listemot\\
+			motTemp : \mot \\
+			i : \naturelnonnul
+		}
+		{
+			\affecter{liste}{liste()}
+			\pour{i}{1}{longueur(mot)}{}
+			{
+				\affecter{motTemp}{mot}
+				\instruction{supprimerCaractere(motTemp, i)}
+				\instruction{inserer(liste, i, motTemp)}
+			}
+			\retourner{liste}
+		}
+		\newline
+
+		\fonction{genererMotsParRemplacement}{mot : \mot}{\listemot}
+		{
+			lettre : \tableauUneDimension{1..NBLETTRES}{ de }{\caractere}\\
+			liste : \listemot\\
+			motTemp : \mot}
+		{
+			\affecter{liste}{liste()}
+			\affecter{lettre[1]}{'a'}
+
+			\pour{i}{1}{NBLETTRES - 1}{}
+			{
+				\affecter{lettre[i+1]}{succ(lettre[i])}
+			}
+
+			\pour{i}{1}{longueur(mot)}{}
+			{
+				\affecter{motTemp}{mot}
+				\pour{j}{1}{NBLETTRES}{}
+				{
+					\instruction{modifierCaractere(motTemp, lettre[j], i)}
+					\instruction{inserer(liste, 1, motTemp)}
+				}
+			}
+			\retourner{liste}
+		}
+		\newline
+
+		\fonction{genererMotsParInsertion}{mot : \mot}{\listemot}
+		{
+			lettre : \tableauUneDimension{1..NBLETTRES}{ de }{\caractere}\\
+			liste : \listemot\\
+			motTemp : \mot}
+		{
+			\affecter{liste}{liste()}
+			\affecter{lettre[1]}{'a'}
+
+			\pour{i}{1}{NBLETTRES - 1}{}
+			{
+				\affecter{lettre[i+1]}{succ(lettre[i])}
+			}
+
+			\pour{i}{1}{longueur(mot) + 1}{}
+			{
+				\pour{j}{1}{NBLETTRES}{}
+				{
+					\affecter{motTemp}{mot}
+					\instruction{insererCaractere(motTemp, lettre[j], i)}
+					\instruction{inserer(liste, 1, motTemp)}
+				}
+			}
+			\retourner{liste}
+		}
+		\newline
+
+		\fonction{motsExacts}{liste : \listemot, d : \dictionnaire}{\listemot}
+		{
+			mot : \mot \\
+			listeFinale : \liste \\
+			i : \naturelnonnul
+		}
+		{
+			\affecter{listeFinale}{liste()}
+			\pour{i}{1}{longueur(liste)}{}
+			{
+				\affecter{mot}{obtenirElement(liste, i)}
+				\sialors{estDansLeDictionnaire(dictionnaire, mot))}
+				{
+					\instruction{ajouter(listeFinale, mot)}
+				}
+			}
+			\retourner{listeFinale}
+		}
+
+	\end{algorithme}

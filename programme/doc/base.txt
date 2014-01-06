@@ -1,0 +1,18 @@
+Au début de chaque .h :
+/**
+ * \file TADSuperMot.h
+ * \brief Implantation du TAD SuperMot avec la SDD SuperMot
+ * \version 1.0
+ */
+
+
+Au début de chaque fonction :
+/**
+* \fn 
+* \brief
+* \param
+* \param
+* \param
+* \return
+* \author Étienne Batise
+*/

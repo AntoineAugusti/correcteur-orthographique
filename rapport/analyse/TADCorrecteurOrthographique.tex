@@ -1,0 +1,13 @@
+\begin{tad}
+	\tadNom{CorrecteurOrthographique}
+	\tadDependances{\booleen, \naturel, \mot, \dictionnaire, \listemot}
+
+	\begin{tadOperations}{CorrecteurOrthographique}
+		\tadOperationAvecPreconditions{proposerMots}{\tadDeuxParams{\dictionnaire}{\mot}}{\tadUnParam{\listemot}}
+
+	\end{tadOperations}
+
+	\begin{tadPreconditions}{CorrecteurOrthographique}
+		\tadPrecondition{proposerMots(d, m)}{non (longueur(m) = 0)}
+	\end{tadPreconditions}	
+\end{tad}

@@ -1,0 +1,87 @@
+\begin{algorithme}
+
+	\type{ElementDictionnaire}{\typePointeur{NoeudDictionnaire}}
+	\newline
+	
+	\begin{enregistrement}{NoeudDictionnaire}
+		\champEnregistrement{lettre}{\caractere}
+		\champEnregistrement{presence}{\booleen}
+		\champEnregistrement{longueur}{\naturelnonnul}
+		\champEnregistrement{tableauDesElementsSuivants}{\tableauUneDimension{1...NBLETTRES}{de }{\typePointeur{\elementDico}}}
+	\end{enregistrement}
+	\newline
+
+	\fonction{element}{c : \caractere, b : \booleen}{\elementDico}
+	{elementDico: \elementdico}
+	{
+		\instruction{\allouer{elementDico}}
+		\affecter{\pointeur{elementDico}.lettre}{c}
+		\affecter{\pointeur{elementDico}.presence}{b}
+		\affecter{\pointeur{elementDico}.longueur}{0}
+		\pour{i}{1}{NBLETTRES}{}
+		{
+			\affecter{\pointeur{elementDico}.tableauDesElementsSuivants}{\pointeurNULL}
+		}
+		\retourner{elementDico}
+	}
+	\newline
+
+	\procedure{ajouterElementSuivant}{\paramEntreeSortie{elementDico: \elementdico}; \paramEntree{nouvelElementDico : \elementdico}}
+	{indice:\naturelnonnul}
+	{
+		\affecter{\pointeur{elementDico}.longueur}{\pointeur{elementDico}.longueur + 1}
+		\affecter{indice}{\pointeur{elementDico}.longueur}
+		\affecter{\pointeur{elementDico}.tableauDesElementsSuivants[indice]}{nouvelElementDico}
+	}
+	\newline
+
+	\fonction{obtenirTableauDesElementsSuivants}{\paramEntree{elementDico : \elementdico}}{\tableauUneDimension{1...NBLETTRES}{de }{\typePointeur{\elementdico}}}
+	{}
+	{
+		\retourner{\pointeur{elementDico}.tableauDesElementsSuivants}
+	}
+	\newline
+
+	\fonction{obtenirLongueurTableauDesElementsSuivants}{\paramEntree{elementDico : \elementdico}}{\naturel}
+	{}
+	{
+		\retourner{\pointeur{elementDico}.longueur}
+	}
+	\newline
+
+	\fonction{obtenirLettre}{elementDico: \elementdico}{\caractere}
+	{}
+	{
+		\retourner{\pointeur{elementDico}.lettre}
+	}
+	\newline
+
+	\fonction{obtenirBooleen}{elementDico: \elementdico}{\booleen}
+	{}
+	{
+		\retourner{\pointeur{elementDico}.presence}
+	}
+	\newline
+
+	\procedureAvecPreconditions{supprimerElementSuivant}{\paramEntreeSortie{elementDico: \elementdico}; \paramEntree{indice: \naturelnonnul}}
+	{1 \infegalea indice \infegalea obtenirLongueurTableauDesElementsSuivants(elementDico)}
+	{i, j:\naturelnonnul}
+	{
+		\commentaire{On supprime tous les fils de l'élément que l'on veut supprimer}
+		\pour{j}{1}{obtenirLongueurTableauDesElementsSuivants(\pointeur{elementDico}.tableauDesElementsSuivants[indice])}{}
+		{
+			\instruction{supprimerElementSuivant(\pointeur{elementDico}.tableauDesElementsSuivants[indice], j)}
+		} 
+		\newline
+		\commentaire{On supprime l'élément que l'on veut supprimer et on décrémente la longueur du père}\\
+		\desallouer{\pointeur{elementDico}.tableauDesElementsSuivants[indice]}
+		\affecter{\pointeur{elementDico}.longueur}{\pointeur{elementDico}.longueur - 1}
+		\newline
+		\commentaire{On supprime le pointeur (qui ne pointe plus vers rien) du tableau du père en décalant}	
+		\pour{i}{indice}{\pointeur{elementDico}.longueur}{}
+		{
+			\affecter{\pointeur{elementDico}.tableauDesElementsSuivants[i]}{\pointeur{elementDico}.tableauDesElementsSuivants[i+1]}
+		}
+	}
+
+\end{algorithme}

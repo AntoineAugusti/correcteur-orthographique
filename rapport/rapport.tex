@@ -1,0 +1,233 @@
+\documentclass[12pt,titlepage,a4paper]{report}
+
+% Texte
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+
+% Numéroter les chapitres a partir de chaque début de partie
+\makeatletter\@addtoreset{chapter}{part}\makeatother
+
+% Mise en page
+\usepackage{url}
+\usepackage[top=2.1cm,bottom=2cm,left=1cm,right=1cm]{geometry}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=false,
+    pdfborder={0 0 0},
+}
+\usepackage{multirow}
+
+% TOC
+\usepackage[french]{minitoc}
+\setcounter{tocdepth}{0}
+\setcounter{minitocdepth}{2}
+\setlength{\mtcindent}{0pt}
+
+% Images
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+% Pour inclure des pages PDF
+\usepackage[final]{pdfpages}	
+
+% Algorithmique
+\usepackage{algorithmeUTF8}
+\usepackage{minted}
+
+% Couverture
+\usepackage{templateINSA}
+\initINSA
+
+\title{Correcteur orthographique}
+\author{Antoine \bsc{Augusti}\\ Etienne \bsc{Batise}\\ Jean-Claude \bsc{Bernard}\\ Thibaud \bsc{Dauce}\\Faustine \bsc{Demiselle}}
+
+\renewcommand\soustitre{Rapport de projet}
+\renewcommand\infoBig{Projet d'Algo}
+\renewcommand\infoSmall{ASI3 2013-2014}
+
+% Les commandes utiles
+\newcommand{\dictionnaire}{\textbf{Dictionnaire}}
+\newcommand{\elementdico}{\textbf{ElementDictionnaire}}
+\newcommand{\elementDico}{\elementdico}
+\newcommand{\elementdictionnaire}{\elementdico}
+\newcommand{\mot}{\textbf{Mot}}
+\newcommand{\supermot}{\textbf{SuperMot}}
+\newcommand{\naturelnonnul}{\textbf{NaturelNonNul}}
+\newcommand{\fichierTexte}{\textbf{FichierTexte}}
+\newcommand{\correcteur}{\textbf{CorrecteurOrthographique}}
+\newcommand{\liste}{\textbf{Liste}}
+\newcommand{\espace}[1][1]{\vspace{#1em}}
+\newcommand{\listemot}{\liste$\textless$\mot$\textgreater$}
+\newcommand{\listeMot}{\listemot}
+\newcommand{\listesupermot}{\liste$\textless$\supermot$\textgreater$}
+\newcommand{\listesuperMot}{\listesupermot}
+\newcommand{\listeSuperMot}{\listesupermot}
+\newcommand{\parametres}{\textbf{Parametres}}
+\newcommand{\differentde}{$\ne$\ }
+\newcommand{\differentDe}{$\ne$\ }
+\newcommand{\infegalea}{$\leq$\ }
+\newcommand{\supegalea}{$\geq$\ }
+
+% Pour inclure du pseudo-code
+\newcommand{\inputAnalyse}[1]{\input{analyse/#1.tex}}
+\newcommand{\inputCP}[1]{\input{conceptionPreliminaire/#1.tex}}
+\newcommand{\inputCD}[1]{\input{conceptionDetaillee/#1.tex}}
+
+% Pour inclure du code C
+\newcommand{\inputCodeH}[1]{\inputminted[tabsize=4,linenos]{c}{../programme/include/#1.h}}
+\newcommand{\inputCodeC}[1]{\inputminted[tabsize=4,linenos]{c}{../programme/src/#1.c}}
+\newcommand{\inputTU}[1]{\inputminted[tabsize=4,linenos]{c}{../programme/tests/test#1.c}}
+
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist 
+
+\begin{document}
+
+
+\titleINSA{15}{images/fond.jpg}{0}{0}{300}{\href{http://www.flickr.com/photos/lord_james/4696338852/sizes/o/in/photostream/}{\textcolor{white}{Licence CC - Lord James}}}
+
+\dominitoc
+\tableofcontents
+
+
+% ######################################################################################################
+
+\part*{Introduction}
+\addcontentsline{toc}{part}{Introduction}
+\input{textes/introduction}
+
+% ######################################################################################################
+
+\part{Analyse}
+\chapter{TAD}
+\minitoc
+	\section{TAD Mot}							\inputAnalyse{TADMot}
+	\section{TAD SuperMot}						\inputAnalyse{TADSuperMot}
+	\section{TAD Dictionnaire}					\inputAnalyse{TADDictionnaire}
+
+\newpage
+\begin{figure}[h]
+	\centering
+	\includepdf{analyseTADDictionnaire.pdf}
+	\caption{\label{analsye_descendante_TAD_dictionnaire}Analyse descendante du TAD Dictionnaire}
+\end{figure}
+\pagebreak
+
+\section{TAD ElementDictionnaire}			\inputAnalyse{TADElementDictionnaire}
+\section{TAD Parametres} 					\inputAnalyse{TADParametres}
+\section{TAD Correcteur Orthographique}		\inputAnalyse{TADCorrecteurOrthographique}
+	
+\newpage
+\begin{figure}
+	\centering
+	\includepdf{analyseTADCorrecteur.pdf}
+	\caption{\label{analsye_descendante_TAD_correcteur}Analyse descendante du TAD Correcteur Orthographique}	
+\end{figure}
+
+\chapter{Analyse Descendante}
+\begin{figure}[b]
+	% \includegraphics[scale=0.01]{analyseDescendante.pdf}	
+	\centering
+	\includepdf{analyseDescendante.pdf}	
+	\caption{\label{analyse_descendante}Analyse descendante du programme}
+\end{figure}
+
+% ######################################################################################################
+
+\part{Conception préliminaire}
+\chapter{Conception préliminaire des TAD}
+\minitoc
+	\section{TAD Mot}												\inputCP{TADMot}
+	\section{TAD SuperMot}											\inputCP{TADSuperMot}
+	\section{TAD Dictionnaire}										\inputCP{TADDictionnaire}
+	\section{TAD ElementDictionnaire}								\inputCP{TADElementDictionnaire}
+	\section{TAD Correcteur Orthographique}							\inputCP{TADCorrecteurOrthographique}
+	\section{TAD Parametres}										\inputCP{TADParametres}
+	
+\chapter{Conception préliminaire de la logique métier}			\inputCP{logiqueMetier}	
+
+% ######################################################################################################
+
+\part{Conception détaillée}
+\chapter{Conception détaillée des TAD}
+\minitoc
+	\section{TAD Mot}												\inputCD{TADMot}
+	\section{TAD SuperMot}											\inputCD{TADSuperMot}
+	\section{TAD Dictionnaire}										\inputCD{TADDictionnaire}
+	\section{TAD ElementDictionnaire}								\inputCD{TADElementDictionnaire}
+	\section{TAD Correcteur Orthographique}							\inputCD{TADCorrecteurOrthographique}
+	\section{TAD Parametres}										\inputCD{TADParametres}
+
+\chapter{Conception détaillée de la logique métier}				\inputCD{logiqueMetier}
+
+% ######################################################################################################
+
+\part{Code C et tests unitaires}
+%% HEADERS
+\chapter{Fichiers headers des TAD}
+\minitoc
+\section{CorrecteurOrthographique}
+	\subsection{Public}					\inputCodeH{TADCorrecteurOrthographique}
+	\subsection{Privé}					\inputCodeH{TADCorrecteurOrthographiquePrive}
+\section{Dictionnaire}					\inputCodeH{TADDictionnaire}
+\section{ElementDictionnaire}			
+	\subsection{Privé}					\inputCodeH{TADElementDictionnairePrive}
+\section{FichierTexte}					\inputCodeH{TADFichierTexte}
+\section{ListeDeMot}					
+	\subsection{Public}					\inputCodeH{TADListeDeMot}
+	\subsection{Privé}					\inputCodeH{TADListeDeMotPrive}
+\section{ListeDeSuperMot}					
+	\subsection{Public}					\inputCodeH{TADListeDeSuperMot}
+	\subsection{Privé}					\inputCodeH{TADListeDeSuperMotPrive}
+\section{Mot}
+	\subsection{Public}					\inputCodeH{TADMot}
+	\subsection{Privé}					\inputCodeH{TADMotPrive}
+\section{Parametres}					\inputCodeH{TADParametres}
+\section{SuperMot}						\inputCodeH{TADSuperMot}
+
+\chapter{Fichiers headers de la logique métier}
+\minitoc
+	\section{affichage}						\inputCodeH{affichage}
+	\section{corriger}						\inputCodeH{corriger}
+	\section{transtypage}					\inputCodeH{transtypage}
+
+%% FICHIERS SOURCES
+\chapter{Fichiers sources des TAD}
+\minitoc
+	\section{CorrecteurOrthographique} 		\inputCodeC{TADCorrecteurOrthographique}
+	\section{Dictionnaire}					\inputCodeC{TADDictionnaire}
+	\section{FichierTexte}					\inputCodeC{TADFichierTexte}
+	\section{ListeDeMot}					\inputCodeC{TADListeDeMot}
+	\section{ListeDeSuperMot}				\inputCodeC{TADListeDeSuperMot}
+	\section{Mot}							\inputCodeC{TADMot}
+	\section{Parametres}					\inputCodeC{TADParametres}
+	\section{SuperMot}						\inputCodeC{TADSuperMot}
+
+\chapter{Fichiers sources de la logique métier}
+\minitoc
+	\section{affichage}						\inputCodeC{affichage}
+	\section{corriger}						\inputCodeC{corriger}
+	\section{main}							\inputCodeC{main}
+	\section{transtypage}					\inputCodeC{transtypage}
+
+%% FICHIERS DES TUs
+\chapter{Fichiers sources des tests unitaires}
+\minitoc
+	\section{Dictionnaire}					\inputTU{TADDictionnaire}
+	\section{ElementDictionnaire}			\inputTU{TADElementDictionnaire}
+	\section{FichierTexte}					\inputTU{TADFichierTexte}
+	\section{ListeDeMot}					\inputTU{TADListeDeMot}
+	\section{ListeDeSuperMot}				\inputTU{TADListeDeSuperMot}
+	\section{Mot}							\inputTU{TADMot}
+	\section{Parametres}					\inputTU{TADParametres}
+	\section{SuperMot}						\inputTU{TADSuperMot}
+
+
+% part code_ _c_ _et_ _tests_ _unitaires_ (end)
+% ######################################################################################################
+\part{Répartition du travail et conclusion}
+\input{textes/conclusion}
+
+\end{document}

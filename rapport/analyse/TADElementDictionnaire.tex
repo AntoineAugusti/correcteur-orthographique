@@ -1,0 +1,18 @@
+\begin{tad}
+ 	\tadNom{ElementDictionnaire}
+	\tadDependances{\booleen, \caractere, \naturel, \naturelnonnul}
+
+	\begin{tadOperations}{ElementDictionnaire}
+		\tadOperation{element}{\tadDeuxParams{\caractere}{\booleen}}{\tadUnParam{\elementdico}}
+		\tadOperation{ajouterElementSuivant}{\tadDeuxParams{\elementdico}{\elementdico}}{\tadUnParam{\elementdico}}
+		\tadOperationAvecPreconditions{supprimerElementSuivant}{\tadDeuxParams{\elementdico}{\naturelnonnul}}{\tadUnParam{\elementdico}}
+		\tadOperation{obtenirTableauDesElementsSuivants}{\tadUnParam{\elementdico}}{\tadUnParam{\tableauUneDimension{1...NBLETTRES}{de }{\typePointeur{\elementdico}}}}
+		\tadOperation{obtenirLongueurTableauDesElementsSuivants}{\tadUnParam{\elementdico}}{\naturel}
+		\tadOperation{obtenirLettre}{\tadUnParam{\elementdico}}{\tadUnParam{\caractere}}
+		\tadOperation{obtenirBooleen}{\tadUnParam{\elementdico}}{\tadUnParam{\booleen}}
+	\end{tadOperations}
+
+	\begin{tadPreconditions}{ElementDictionnaire}
+		\tadPrecondition{supprimerElementSuivant(e, i)}{1 \infegalea i \infegalea obtenirLongueurTableauDesElementsSuivants(e)}
+	\end{tadPreconditions}
+\end{tad}
