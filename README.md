@@ -6,7 +6,7 @@ Pour faire une belle coloration syntaxique, il faut installer un petit plugin Py
 
 Voici la procédure à suivre :
 - Télécharger la dernière version de Pygments au format .tar.gz sur https://pypi.python.org/pypi/Pygments
--  Taper les commandes suivantes :
+- Taper les commandes suivantes :
 
 	tar -zxvf Pygments-1.6.tar.gz
 	cd Pygments-1.6
