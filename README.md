@@ -1,3 +1,5 @@
+Correcteur orthographique
+===========
 # Coloration syntaxique dans le rapport
 Pour faire une belle coloration syntaxique, il faut installer un petit plugin Python sur votre machine.
 
