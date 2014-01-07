@@ -71,10 +71,12 @@ ListeDeMot CorrecteurOrthographique_genererMotsParSuppression(Mot mot) {
 
 	/* Corps */
 	listeDeMots = ListeDeMot_liste();
-	for (i = 1; i <= Mot_longueur(mot); i++) {
-		motTemp = Mot_genererMot(Mot_obtenirContenu(mot));
-		Mot_supprimerCaractere(&motTemp, i);
-		ListeDeMot_inserer(&listeDeMots, motTemp, 1);
+	if (Mot_longueur(mot) >= 2) {
+		for (i = 1; i <= Mot_longueur(mot); i++) {
+			motTemp = Mot_genererMot(Mot_obtenirContenu(mot));
+			Mot_supprimerCaractere(&motTemp, i);
+			ListeDeMot_inserer(&listeDeMots, motTemp, 1);
+		}
 	}
 	return listeDeMots;
 }

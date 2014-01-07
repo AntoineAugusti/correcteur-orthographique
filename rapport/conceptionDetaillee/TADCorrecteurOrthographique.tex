@@ -16,7 +16,7 @@
 			\affecter{liste}{genererMotParRemplacement(mot)}
 			\affecter{liste2}{genererMotParSuppression(mot)}
 			\affecter{liste3}{genererMotParInsertion(mot)}
-			\affecter{liste4}{enererMotsParInversion(mot)}
+			\affecter{liste4}{genererMotsParInversion(mot)}
 
 			\pour{i}{1}{longueur(liste2)}{}{
 				\instruction{ajouter(liste, obtenirElement(liste2, i))}
@@ -31,7 +31,7 @@
 		}
 		\newline
 
-		\fonction{enererMotsParInversion}{mot : \mot}{\listemot}
+		\fonction{genererMotsParInversion}{mot : \mot}{\listemot}
 		{
 			liste: \listemot\\
 			motTemp : \mot\\
@@ -60,11 +60,14 @@
 		}
 		{
 			\affecter{liste}{liste()}
-			\pour{i}{1}{longueur(mot)}{}
+			\sialors{longueur(mot) \supegalea 2}
 			{
-				\affecter{motTemp}{mot}
-				\instruction{supprimerCaractere(motTemp, i)}
-				\instruction{inserer(liste, i, motTemp)}
+				\pour{i}{1}{longueur(mot)}{}
+				{
+					\affecter{motTemp}{mot}
+					\instruction{supprimerCaractere(motTemp, i)}
+					\instruction{inserer(liste, i, motTemp)}
+				}
 			}
 			\retourner{liste}
 		}
